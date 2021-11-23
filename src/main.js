@@ -6,9 +6,15 @@ const xObject = JSON.parse(x)        //将字符串x转换成对象
 
 /*将xObject赋值给hashMap，如果xObject为空，则初始化一个*/
 const hashMap = xObject || [
-    {logo: 'A' , logoType: 'text' , url : 'https://www.acfun.cn/'},
-    {logo: 'B' , logoType: 'icon' , url : 'https://bilibili.com/'},
+    {logo: 'A' , logoType: 'text' , url : 'https://www.acfun.cn'},
+    {logo: 'B' , logoType: 'icon' , url : 'https://bilibili.com'},
 ]
+
+const simplifyUrl = (url) =>{
+    return url.replace('https://', '')
+        .replace('http://', '')
+        .replace('www.', '')    //replace会把url变成新的字符串，但原本的url不会变，所以不能直接return url
+}
 
 /*遍历hashMap，且生成一个li；forEach会将每一项作为参数告诉你，node就是接收到的参数*/
 const render = ()=>{
@@ -19,7 +25,7 @@ const render = ()=>{
             <a href="${node.url}">      <!--${node.url}非jQuery语法-->
             <div class="site">
                 <div class="logo">${node.logo}</div>
-                <div class="link">${node.url}</div>
+                <div class="link">${simplifyUrl(node.url)}</div>
             </div>
             </a>
         </li>
