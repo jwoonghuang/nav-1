@@ -6,14 +6,15 @@ const xObject = JSON.parse(x)        //将字符串x转换成对象
 
 /*将xObject赋值给hashMap，如果xObject为空，则初始化一个*/
 const hashMap = xObject || [
-    {logo: 'A' , logoType: 'text' , url : 'https://www.acfun.cn'},
-    {logo: 'B' , logoType: 'icon' , url : 'https://bilibili.com'},
+    {logo: 'A' , url : 'https://www.acfun.cn'},
+    {logo: 'B' , url : 'https://bilibili.com'},
 ]
 
 const simplifyUrl = (url) =>{
     return url.replace('https://', '')
         .replace('http://', '')
         .replace('www.', '')    //replace会把url变成新的字符串，但原本的url不会变，所以不能直接return url
+        .replace(/\/.*/, '')    //删除/后面所有字符
 }
 
 /*遍历hashMap，且生成一个li；forEach会将每一项作为参数告诉你，node就是接收到的参数*/
@@ -26,6 +27,11 @@ const render = ()=>{
             <div class="site">
                 <div class="logo">${node.logo}</div>
                 <div class="link">${simplifyUrl(node.url)}</div>
+                <div class="delete">
+                    <svg class="icon">
+                        <use xlink:href="#icon-jian"></use>
+                    </svg>
+                </div>
             </div>
             </a>
         </li>
@@ -43,7 +49,7 @@ $('.addButton')
             url = 'https://' + url
         }
         hashMap.push({
-            logo: url[0] ,
+            logo: simplifyUrl(url)[0].toUpperCase() ,
             logoType: 'text' ,
             url: url}
             );
@@ -53,7 +59,8 @@ $('.addButton')
 });
 
 /*在离开页面前，将hashMap存入localStorage中*/
+/*
 window.onbeforeunload = ()=>{
     const string = JSON.stringify(hashMap)
     localStorage.setItem('x',string)
-}
+}*/
