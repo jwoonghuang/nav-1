@@ -20,12 +20,11 @@ const simplifyUrl = (url) =>{
 /*遍历hashMap，且生成一个li；forEach会将每一项作为参数告诉你，node就是接收到的参数*/
 const render = ()=>{
     $siteList.find('li:not(.last)').remove()  /*删除所有li，除了最后一个；否则会将原本存在的hash再推一遍*/
-    hashMap.forEach(node=>{
+    hashMap.forEach((node,index)=>{
         const $li = $(`
         <li>
-            <a href="${node.url}">      <!--${node.url}非jQuery语法-->
             <div class="site">
-                <div class="logo">${node.logo}</div>
+                <div class="logo">${node.logo}</div>  <!--${node.logo}非jQuery语法-->
                 <div class="link">${simplifyUrl(node.url)}</div>
                 <div class="delete">
                     <svg class="icon">
@@ -33,9 +32,16 @@ const render = ()=>{
                     </svg>
                 </div>
             </div>
-            </a>
         </li>
     `).insertBefore($lastLi);
+        $li.on('click',()=>{
+            window.open(node.url)
+        })
+        $li.on('click', '.delete', (e)=>{
+            e.stopPropagation()  //阻止冒泡，防止点击删除按钮时，点中li
+            hashMap.splice(index,1)
+            render()
+        })
     });
 }
 
@@ -59,8 +65,7 @@ $('.addButton')
 });
 
 /*在离开页面前，将hashMap存入localStorage中*/
-/*
 window.onbeforeunload = ()=>{
     const string = JSON.stringify(hashMap)
     localStorage.setItem('x',string)
-}*/
+}
