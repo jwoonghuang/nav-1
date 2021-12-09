@@ -17,6 +17,7 @@ const simplifyUrl = (url) =>{
         .replace(/\/.*/, '')    //删除/后面所有字符
 }
 
+
 /*遍历hashMap，且生成一个li；forEach会将每一项作为参数告诉你，node就是接收到的参数*/
 const render = ()=>{
     $siteList.find('li:not(.last)').remove()  /*删除所有li，除了最后一个；否则会将原本存在的hash再推一遍*/
@@ -82,29 +83,28 @@ $(document).on('keypress', (e)=>{
 // cover样式生成
 function reset() {
 
-    var hexValues = ["0","1","2","3","4","5","6","7","8","9","a","b","c","d","e"];
+    let hexValues = ["0","1","2","3","4","5","6","7","8","9","a","b","c","d","e"];
     
     function populate(a) {
-      for ( var i = 0; i < 6; i++ ) {
-        var x = Math.round( Math.random() * 14 );
-        var y = hexValues[x];
+      for ( let i = 0; i < 6; i++ ) {
+        let x = Math.round( Math.random() * 14 );
+        let y = hexValues[x];
         a += y;
       }
       return a;
     }
     
-    var newColor1 = populate('#');
-    var newColor2 = populate('#');
-    var newColor3 = populate('#');
-    var angle = Math.round( Math.random() * 360 );
+    let newColor1 = populate('#');
+    let newColor2 = populate('#');
+    let newColor3 = populate('#');
+    let angle = Math.round( Math.random() * 360 );
     
-    var gradient = "linear-gradient(" + angle + "deg, " + newColor1 + ", " + newColor2 + ", " + newColor3 + ")";
+    let gradient = "linear-gradient(" + angle + "deg, " + newColor1 + ", " + newColor2 + ", " + newColor3 + ")";
     
     document.getElementById("cover").style.background = gradient;
     
   }
-  
-// document.onload = reset();
-$('#set').on('click', ()=>{
+
+$('#reset').on('click', ()=>{
     reset()
 })
