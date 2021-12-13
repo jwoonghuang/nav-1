@@ -84,9 +84,10 @@ window.onbeforeunload = ()=>{
 document.onmousedown = function(event){
     let vvv = event.target
     if(vvv.id === 'linshi'){
-
+        console.log('yes')
     }else{
-        $(document).on('keypress', (e)=>{
+        console.log('no')
+        $('#cover').on('keypress', (e)=>{
             const {key} = e   //等同于 const key = e.key
             for(let i = 0; i<hashMap.length ;i++ ){
                 if (hashMap[i].logo.toLowerCase() === key){
@@ -96,6 +97,7 @@ document.onmousedown = function(event){
         })
     }
 }
+
 // cover样式生成
 function reset() {
 
